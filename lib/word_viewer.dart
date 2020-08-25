@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:csv/csv.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async';
 import 'dart:math';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'word_global.dart';
 
 class WordViewer extends StatefulWidget {
@@ -16,19 +14,35 @@ class WordViewer extends StatefulWidget {
 
 class WordViewerState extends State<WordViewer> {
   bool play = true;
-  bool menuSection = false;
-  bool swapLanguage = false;
-  int mainLanguage = 0;
-  int secLanguage = 1;
   Timer timer;
   IconData iconData = Icons.play_arrow;
-  int index = 0;
-  int wait = 1000;
 
   updateTime(Timer timer) {
     setState(() {
-      index = new Random().nextInt(Global.wordList.length);
-      print("playing :D $index");
+      Global.index += 1;
+      if (Global.index >= Global.wordList.length) {
+        Global.index = 0;
+      }
+    });
+  }
+
+  prevWord() {
+    setState(() {
+      if (Global.index <= 0) {
+        Global.index = Global.wordList.length - 1;
+      } else {
+        Global.index -= 1;
+      }
+    });
+  }
+
+  nextWord() {
+    setState(() {
+      if (Global.index >= Global.wordList.length - 1) {
+        Global.index = 0;
+      } else {
+        Global.index += 1;
+      }
     });
   }
 
@@ -44,10 +58,9 @@ class WordViewerState extends State<WordViewer> {
   startWatch() {
     setState(() {
       play = false;
-      menuSection = false;
       print("starting");
       iconData = Icons.stop;
-      timer = Timer.periodic(Duration(milliseconds: wait), updateTime);
+      timer = Timer.periodic(Duration(milliseconds: Global.wait), updateTime);
     });
   }
 
@@ -55,7 +68,6 @@ class WordViewerState extends State<WordViewer> {
     setState(() {
       play = true;
       print("stopped");
-      menuSection = true;
       iconData = Icons.play_arrow;
       if (timer != null) {
         timer.cancel();
@@ -68,96 +80,6 @@ class WordViewerState extends State<WordViewer> {
     super.initState();
   }
 
-  _openPopup(context) {
-    Alert(
-      context: context,
-      title: "Configuration",
-      content: Column(
-        children: <Widget>[
-          DialogButton(
-            onPressed: () => {
-              setState(() {
-                if (mainLanguage == 0) {
-                  mainLanguage = 1;
-                  secLanguage = 0;
-                } else {
-                  mainLanguage = 0;
-                  secLanguage = 1;
-                }
-              })
-            },
-            child: Text(
-              "Swap languages",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-          ),
-          Text(
-            "Speed",
-            style: TextStyle(color: Colors.grey, fontSize: 20),
-          ),
-        ],
-      ),
-      buttons: [
-        DialogButton(
-          onPressed: () => {
-            Navigator.pop(context),
-            setState(() {
-              stopWatch();
-              wait = 1000;
-              startWatch();
-            })
-          },
-          child: Text(
-            "1",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        ),
-        DialogButton(
-          onPressed: () => {
-            Navigator.pop(context),
-            setState(() {
-              stopWatch();
-              wait = 2000;
-              startWatch();
-            })
-          },
-          child: Text(
-            "2",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        ),
-        DialogButton(
-          onPressed: () => {
-            Navigator.pop(context),
-            setState(() {
-              stopWatch();
-              wait = 3000;
-              startWatch();
-            })
-          },
-          child: Text(
-            "3",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        ),
-        DialogButton(
-          onPressed: () => {
-            Navigator.pop(context),
-            setState(() {
-              stopWatch();
-              wait = 4000;
-              startWatch();
-            })
-          },
-          child: Text(
-            "4",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        )
-      ],
-    ).show();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,49 +88,108 @@ class WordViewerState extends State<WordViewer> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 100),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.12,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Text(
-                  Global.wordList[index][mainLanguage],
-                  style: TextStyle(
-                      color: Colors.black.withOpacity(0.8), fontSize: 80),
+                Container(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: AutoSizeText(
+                      Global.wordList[Global.index][Global.mainLanguage],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black.withOpacity(0.8), fontSize: 80),
+                      maxLines: 1,
+                    ),
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 60),
-            Text(
-              Global.wordList[index][secLanguage],
-              style:
-                  TextStyle(color: Colors.black.withOpacity(0.8), fontSize: 40),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.08,
             ),
-            SizedBox(height: 60),
-            Text(
-              Global.wordList[index][2],
-              style:
-                  TextStyle(color: Colors.black.withOpacity(0.8), fontSize: 25),
+            Container(
+              color: const Color(0xFFEDDCD2),
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.10,
+                  ),
+                  Container(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: AutoSizeText(
+                        Global.wordList[Global.index][Global.secLanguage],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black.withOpacity(0.8), fontSize: 50),
+                        maxLines: 1,
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                    height: MediaQuery.of(context).size.width * 0.10,
+                    thickness: 1,
+                    indent: 10,
+                    endIndent: 10,
+                  ),
+                  Container(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      child: AutoSizeText(
+                        Global.wordList[Global.index][2],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black.withOpacity(0.8), fontSize: 20),
+                        maxLines: 1,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.10,
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: Align(
-                alignment: Alignment.bottomLeft,
-                child: IconButton(
-                  icon: Icon(Icons.settings, size: 30.0),
-                  color: Colors.blue,
-                  onPressed: () {
-                    _openPopup(context);
-                  },
+                alignment: FractionalOffset.bottomCenter,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.navigate_before, size: 30.0),
+                      color: Colors.grey,
+                      onPressed: prevWord,
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.play_arrow, size: 30.0),
+                      color: Colors.grey,
+                      onPressed: startOrStop,
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.navigate_next, size: 30.0),
+                      color: Colors.grey,
+                      onPressed: nextWord,
+                    ),
+                    // SizedBox(width: 5),
+                  ],
                 ),
               ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: startOrStop,
-        child: Icon(iconData),
-        backgroundColor: Colors.green,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: startOrStop,
+      //   child: Icon(iconData),
+      //   backgroundColor: Color(0xFFF15156),
+      // ),
     );
   }
 }

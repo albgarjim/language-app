@@ -17,14 +17,35 @@ class MyApp extends StatelessWidget {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Color(0xFFF15156),
+            elevation: 0,
             bottom: TabBar(
+              labelColor: Colors.redAccent,
+              unselectedLabelColor: Colors.white,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicator: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
+                  color: Colors.white),
               tabs: [
-                Tab(icon: Icon(Icons.directions_car)),
-                Tab(icon: Icon(Icons.directions_transit)),
-                Tab(icon: Icon(Icons.directions_bike)),
+                new Container(
+                  width: double.infinity,
+                  child: new Tab(
+                    icon: Icon(Icons.flag),
+                  ),
+                ),
+                new Container(
+                  width: double.infinity,
+                  child: new Tab(icon: Icon(Icons.timer)),
+                ),
+                new Container(
+                  width: double.infinity,
+                  child: new Tab(icon: Icon(Icons.settings)),
+                ),
               ],
             ),
-            title: Text('Tabs Demo'),
+            title: Text('Peekword'),
           ),
           body: TabBarView(
             children: [

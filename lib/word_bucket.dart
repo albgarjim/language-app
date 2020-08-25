@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'dart:math';
 import 'word_global.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class WordBucket extends StatefulWidget {
   WordBucket({Key key, this.title}) : super(key: key);
@@ -32,20 +33,20 @@ class WordBucketState extends State<WordBucket> {
   }
 
   void _knowWord() {
-    setState(() {
-      if (Global.wordList.length > 1) {
-        Global.wordList.removeAt(index);
-        index = new Random().nextInt(Global.wordList.length);
-      }
-    });
+    if (Global.wordList.length > 1) {
+      Global.wordList.removeAt(index);
+      setState(() {
+        Global.index = new Random().nextInt(Global.wordList.length);
+      });
+    }
   }
 
   void _noKnowWord() {
-    setState(() {
-      if (Global.wordList.length > 1) {
-        index = new Random().nextInt(Global.wordList.length);
-      }
-    });
+    if (Global.wordList.length > 1) {
+      setState(() {
+        Global.index = new Random().nextInt(Global.wordList.length);
+      });
+    }
   }
 
   @override
@@ -53,17 +54,15 @@ class WordBucketState extends State<WordBucket> {
     super.initState();
     if (!Global.loadedCSV) {
       loadCSV();
-      setState(() {
-        Global.loadedCSV = true;
-      });
+      Global.loadedCSV = true;
     }
-    index = new Random().nextInt(Global.wordList.length);
+    Global.index = new Random().nextInt(Global.wordList.length);
   }
 
   void loadCSV() async {
     var myData = await rootBundle.loadString("assets/mycsv.csv");
     List<List<dynamic>> csvTable =
-        CsvToListConverter(fieldDelimiter: ",", eol: '\n').convert(myData);
+        CsvToListConverter(fieldDelimiter: ";", eol: '\n').convert(myData);
     setState(() {
       Global.wordList.addAll(csvTable);
       Global.wordList.removeAt(0);
@@ -80,35 +79,70 @@ class WordBucketState extends State<WordBucket> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Container(
+              color: const Color(0xFFEDDCD2),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.25,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.10,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: AutoSizeText(
+                      Global.wordList[Global.index][0],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black.withOpacity(0.8), fontSize: 80),
+                      maxLines: 1,
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.10,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                new IconButton(
-                  icon: Icon(Icons.clear, size: 30.0),
-                  color: Colors.red,
+                DialogButton(
+                  width: MediaQuery.of(context).size.width * 0.35,
+                  color: Color(0xFFF15156),
                   onPressed: _noKnowWord,
+                  child: Icon(Icons.clear, color: Colors.white, size: 30.0),
                 ),
-                // SizedBox(width: 20),
                 SizedBox(
-                  width: 200,
-                  height: 100,
-                  child: AutoSizeText(
-                    Global.wordList[index][0],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.black.withOpacity(0.8), fontSize: 80),
-                    maxLines: 1,
-                  ),
+                  width: MediaQuery.of(context).size.width * 0.05,
                 ),
-                // SizedBox(width: 40),
-                new IconButton(
-                  icon: Icon(Icons.done, size: 30.0),
-                  color: Colors.green,
+                DialogButton(
+                  width: MediaQuery.of(context).size.width * 0.35,
+                  color: Color(0xFFF15156),
                   onPressed: _knowWord,
+                  child: Icon(Icons.done, color: Colors.white, size: 30.0),
                 ),
                 // SizedBox(width: 5),
               ],
             ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: <Widget>[
+            //     SizedBox(
+            //       width: MediaQuery.of(context).size.width * 0.15,
+            //     ),
+            //     new IconButton(
+            //       icon: Icon(Icons.done, size: 30.0),
+            //       color: Colors.green,
+            //       onPressed: _knowWord,
+            //     ),
+            //     // SizedBox(width: 5),
+            //   ],
+            // ),
           ],
         ),
       ),
