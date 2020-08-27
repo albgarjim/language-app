@@ -72,6 +72,7 @@ class WordBucketState extends State<WordBucket> {
     });
   }
 
+  String dropdownValue = 'German words 0 - 100';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,6 +80,18 @@ class WordBucketState extends State<WordBucket> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+              child: AutoSizeText(
+                "Do you know the word...",
+                textAlign: TextAlign.center,
+                style:
+                    TextStyle(color: Colors.grey.withOpacity(1), fontSize: 30),
+                maxLines: 1,
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
             Container(
               color: const Color(0xFFEDDCD2),
               width: MediaQuery.of(context).size.width,

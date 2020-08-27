@@ -32,9 +32,19 @@ class WordConfigState extends State<WordConfig> {
       body: Center(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 20),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+            ),
+            Text(
+              "Swap languages",
+              style: TextStyle(color: Colors.grey, fontSize: 20),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
             DialogButton(
               color: Color(0xFFF15156),
+              width: MediaQuery.of(context).size.width * 0.925,
               onPressed: () => {
                 if (Global.mainLanguage == 0)
                   {
@@ -48,20 +58,25 @@ class WordConfigState extends State<WordConfig> {
                   }
               },
               child: Text(
-                "Swap languages",
+                "Swap",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
-            SizedBox(height: 60),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+            ),
             Text(
               "Seconds per word",
               style: TextStyle(color: Colors.grey, fontSize: 20),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 DialogButton(
-                  width: 100.0,
+                  width: MediaQuery.of(context).size.width * 0.2,
                   color: Color(0xFFF15156),
                   onPressed: () => {Global.wait = 2000},
                   child: Text(
@@ -70,7 +85,7 @@ class WordConfigState extends State<WordConfig> {
                   ),
                 ),
                 DialogButton(
-                  width: 100.0,
+                  width: MediaQuery.of(context).size.width * 0.2,
                   color: Color(0xFFF15156),
                   onPressed: () => {Global.wait = 3000},
                   child: Text(
@@ -79,7 +94,7 @@ class WordConfigState extends State<WordConfig> {
                   ),
                 ),
                 DialogButton(
-                  width: 100.0,
+                  width: MediaQuery.of(context).size.width * 0.2,
                   color: Color(0xFFF15156),
                   onPressed: () => {Global.wait = 4000},
                   child: Text(
@@ -88,7 +103,7 @@ class WordConfigState extends State<WordConfig> {
                   ),
                 ),
                 DialogButton(
-                  width: 100.0,
+                  width: MediaQuery.of(context).size.width * 0.2,
                   color: Color(0xFFF15156),
                   onPressed: () => {Global.wait = 6000},
                   child: Text(
