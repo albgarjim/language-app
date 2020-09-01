@@ -1,10 +1,17 @@
-# Project title
+# Language App
 
 
 [//]: # "References"
 [contact-albert]: albgarjim1@gmail.com
+[flutter-launch]: https://flutter.dev/docs/get-started/test-drive?tab=vscode
+[lib-autosize-text]: https://pub.dev/packages/auto_size_text
+[lib-rflutter]: https://pub.dev/packages/rflutter_alert
+[lib-path_provider]: https://pub.dev/packages/path_provider
+[lib-csv]: https://pub.dev/packages/csv
+[word-classify]: ./docs/classify.png
+[word-visualize]: ./docs/learn.png
 
-
+App prototype to learn vocabulary of a language
 <!-- description of what the project does  -->
 
 ## Table of Contents
@@ -20,10 +27,15 @@
 
 ## Introduction
 
+This project is a prototype for a language-learning app. It's made in flutter and consists of 2 main widgets. The first serves as word classifier and aims to build a dictionary of words the user knows and doesn't know. The second serves as a vocabulary-learning app, where it can be seen the word, translation and sentence where it is used.
 
 ## Results
 
-<!-- results of what the project does, add images and gifs -->
+Window to classify words between known and not known:
+![classify][word-classify]
+
+Window to learn new words
+![visualize][word-visualize]
 
 ## Installation
 
@@ -31,18 +43,22 @@
 Clone this repository with the command:
 
 ```sh
-git clone https://github.com/albgarjim/sudoku-solver.git
+git clone https://github.com/albgarjim/language-app.git
 ```
 
-Navigate into the src file insidie the `sudoku-solver` folder:
+Navigate into the src file insidie the `language-app` folder:
 
 ```sh
-cd ./src/sudoku-solver
+cd ./src/language-app
 ```
+To launch the project follow the [official documentation][flutter-launch] depending of your preferred IDE
 
-This project requires the following python libraries:
-- csv
+This project requires the following flutter libraries; in each link can be found information about how to install them:
 
+- [auto_size_text][lib-autosize-text]
+- [rflutter][lib-rflutter]
+- [path_provider][lib-path_provider]
+- [csv][lib-csv]
 
 <!-- name technologies used and how to build project -->
 
