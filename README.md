@@ -1,16 +1,61 @@
-# hello_world
+# Project title
 
-A new Flutter project.
 
-## Getting Started
+[//]: # "References"
+[contact-albert]: albgarjim1@gmail.com
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+<!-- description of what the project does  -->
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Table of Contents
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Project title](#project-title)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Results](#results)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [License](#license)
+  - [Contact](#contact)
+
+## Introduction
+
+
+## Results
+
+<!-- results of what the project does, add images and gifs -->
+
+## Installation
+
+
+Clone this repository with the command:
+
+```sh
+git clone https://github.com/albgarjim/sudoku-solver.git
+```
+
+Navigate into the src file insidie the `sudoku-solver` folder:
+
+```sh
+cd ./src/sudoku-solver
+```
+
+This project requires the following python libraries:
+- csv
+
+
+<!-- name technologies used and how to build project -->
+
+
+## Usage
+<!-- how to use the project, add code fragments if needed -->
+
+
+## License
+
+Released under MIT license
+
+
+## Contact
+
+Maintainer: [Alberto Garcia][contact-alberto]
